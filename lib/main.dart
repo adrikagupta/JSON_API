@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:json_api/screens/home.dart';
+import 'package:json_api/screens/allPosts.dart';
 
 void main() {
   runApp(MyApp());
@@ -12,7 +12,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Meraaki Learnint',
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: AllPosts(),
+      theme: ThemeData(
+        fontFamily: 'Faustina'
+      ),
     );
   }
 }
