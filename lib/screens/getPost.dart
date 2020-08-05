@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:json_api/animations/fadeAnimation.dart';
 import 'package:json_api/models/post.dart';
 
 class GetPost extends StatefulWidget {
@@ -50,62 +50,64 @@ class _GetPostState extends State<GetPost> {
         elevation: 0,
       ),
       body: SingleChildScrollView(
-          child: Container(
-          height:orientation==Orientation.portrait?height:height*1.5,
-          width: width,
-          child: Center(
-            child: Container(
-              margin:EdgeInsets.symmetric(vertical:20),
-              height:orientation==Orientation.portrait?height*0.4:height*1.3,
-              width: orientation==Orientation.portrait?width*0.8:width*0.6,
-              decoration: BoxDecoration(
-                 color: Colors.white,
-                 borderRadius: BorderRadiusDirectional.circular(20),
-                  boxShadow: <BoxShadow>[
-                  BoxShadow(  
-                   color: Colors.black12,
-                   blurRadius: 10.0,
-                   offset: Offset(0.0, 10.0),
-                 ),
-               ],
-              ),
-             
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    TextField(
-                    controller: idController,
-                    style: TextStyle(fontSize: 16),
-                    decoration: InputDecoration(
-                        enabledBorder: OutlineInputBorder( borderSide: BorderSide(color: Colors.teal[400])),
-                        labelText: 'Type Id'),
-                     ),
-                    SizedBox(height: 10,),
-                     FlatButton(
-                       color: Colors.teal[400],
-                       onPressed: (){
-                        getPost();
-                       },
-                       child: Text("Get", style: TextStyle(fontSize: 16,color: Colors.white),),
-                     ),
-                     SizedBox(height: 20,),
-                     gotPost? Container(
-                       height: orientation==Orientation.portrait?height*0.4:height*0.8,
-                       width: double.infinity,
-                       margin: EdgeInsets.symmetric(horizontal:10),
-                       padding: EdgeInsets.symmetric(horizontal:10),
-                       child: Text("Details:\n\nuserId:  ${requiredPost.userId} \n\ntitle:  ${requiredPost.title} \n\nbody:  ${requiredPost.body} ",
-                       style: TextStyle(fontSize: 16),
+          child: FadeAnimation(1,
+            Container(
+            height:orientation==Orientation.portrait?height*0.85:height*1.5,
+            width: width,
+            child: Center(
+              child: Container(
+                margin:EdgeInsets.symmetric(vertical:20),
+                height:orientation==Orientation.portrait?height*0.8:height*1.3,
+                width: orientation==Orientation.portrait?width*0.85:width*0.6,
+                decoration: BoxDecoration(
+                   color: Colors.white,
+                   borderRadius: BorderRadiusDirectional.circular(20),
+                    boxShadow: <BoxShadow>[
+                    BoxShadow(  
+                     color: Colors.black12,
+                     blurRadius: 10.0,
+                     offset: Offset(0.0, 10.0),
+                   ),
+                 ],
+                ),
+               
+                child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      TextField(
+                      controller: idController,
+                      style: TextStyle(fontSize: 16),
+                      decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder( borderSide: BorderSide(color: Colors.teal[400])),
+                          labelText: 'Type Id'),
                        ),
-                     ):Container()
-                  ],
+                      SizedBox(height: 10,),
+                       FlatButton(
+                         color: Colors.teal[400],
+                         onPressed: (){
+                          getPost();
+                         },
+                         child: Text("Get", style: TextStyle(fontSize: 16,color: Colors.white),),
+                       ),
+                       SizedBox(height: 20,),
+                       gotPost? Container(
+                         height: orientation==Orientation.portrait?height*0.5:height*0.8,
+                         width: double.infinity,
+                         margin: EdgeInsets.symmetric(horizontal:10),
+                         padding: EdgeInsets.symmetric(horizontal:10),
+                         child: Text("Details:\n\nuserId:  ${requiredPost.userId} \n\ntitle:  ${requiredPost.title} \n\nbody:  ${requiredPost.body} ",
+                         style: TextStyle(fontSize: 16),
+                         ),
+                       ):Container()
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
         ),
+          ),
       ),
     );
   }

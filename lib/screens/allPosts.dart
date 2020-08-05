@@ -1,8 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:json_api/animations/fadeAnimation.dart';
 import 'package:json_api/models/post.dart';
 import 'package:json_api/screens/createPost.dart';
 import 'package:json_api/screens/getPost.dart';
@@ -73,31 +72,33 @@ class _AllPostsState extends State<AllPosts> {
                         child: Container(
                           width: width,
                           padding: const EdgeInsets.only(top:10),
-                          child: Text("All the Posts",textAlign: TextAlign.center, style: TextStyle(fontSize: 40,color: Colors.white, fontFamily: 'Acme'),),
+                          child: FadeAnimation(1,Text("All the Posts",textAlign: TextAlign.center, style: TextStyle(fontSize: 40,color: Colors.white, fontFamily: 'Acme'),)),
                         ),
                       ),
                     ),
                     Positioned(
                               top: orientation==Orientation.portrait? height*0.09:height*0.15,
-                              left:orientation==Orientation.portrait? width*0.06:width*0.25,
-                              child: Row(
-                                children: <Widget>[
-                                  FlatButton.icon(
-                                    color: Color.fromRGBO(207, 117, 91,1),
-                                    onPressed: ()=>addPost(),
-                                    textColor: Colors.white,
-                                    icon: Icon(Icons.add), 
-                                    label:Text("Add Post", style: TextStyle(fontSize: 15,letterSpacing: 1.2, fontWeight: FontWeight.bold,))
-                                    ),
-                                    SizedBox(width: orientation==Orientation.portrait?20:70,),
+                              left:orientation==Orientation.portrait? width*0.12:width*0.25,
+                              child: FadeAnimation(1.25,
+                                  Row(
+                                  children: <Widget>[
                                     FlatButton.icon(
-                                    color: Color.fromRGBO(108, 102, 116,1),
-                                    onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>GetPost())), 
-                                    textColor: Colors.white,
-                                    icon: Icon(Icons.get_app), 
-                                    label:Text("Get a Post", style: TextStyle(fontSize: 15,letterSpacing: 1.2, fontWeight: FontWeight.bold,))
-                                    ),
-                                ],
+                                      color: Color.fromRGBO(207, 117, 91,1),
+                                      onPressed: ()=>addPost(),
+                                      textColor: Colors.white,
+                                      icon: Icon(Icons.add), 
+                                      label:Text("Add Post", style: TextStyle(fontSize: 15,letterSpacing: 1.2, fontWeight: FontWeight.bold,))
+                                      ),
+                                      SizedBox(width: orientation==Orientation.portrait?20:70,),
+                                      FlatButton.icon(
+                                      color: Color.fromRGBO(108, 102, 116,1),
+                                      onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context)=>GetPost())), 
+                                      textColor: Colors.white,
+                                      icon: Icon(Icons.get_app), 
+                                      label:Text("Get a Post", style: TextStyle(fontSize: 15,letterSpacing: 1.2, fontWeight: FontWeight.bold,))
+                                      ),
+                                  ],
+                                ),
                               ),
                             ),
                   ],
@@ -134,18 +135,20 @@ class _AllPostsState extends State<AllPosts> {
     return Positioned(
       left:0,
       top:orientation==Orientation.portrait?90:55,
-      child: Container(
-        // margin: EdgeInsets.symmetric(vertical:5),
-        alignment: FractionalOffset.centerLeft,
-        child: Container(
-          height: 60,
-          width: 60,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Color.fromRGBO(90, 125, 141,1)
-          ),
-          child: Center(
-            child: Text( "${postList[index].id}",style: TextStyle(fontSize: 23,color: Colors.white),),
+      child: FadeAnimation(1.5,
+          Container(
+          // margin: EdgeInsets.symmetric(vertical:5),
+          alignment: FractionalOffset.centerLeft,
+          child: Container(
+            height: 60,
+            width: 60,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Color.fromRGBO(90, 125, 141,1)
+            ),
+            child: Center(
+              child: Text( "${postList[index].id}",style: TextStyle(fontSize: 23,color: Colors.white),),
+            ),
           ),
         ),
       ),
@@ -156,28 +159,30 @@ class _AllPostsState extends State<AllPosts> {
     var orientation = MediaQuery.of(context).orientation;
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    return Container(
-      height: orientation==Orientation.portrait? 250:170,
-      width:width,
-      padding: EdgeInsets.only(left:35,right:10),
-      margin: EdgeInsets.only(left: 30.0),
-      decoration:BoxDecoration(
-      color: Color.fromRGBO(231, 154, 134,0.7),
-      shape: BoxShape.rectangle,
-      borderRadius: BorderRadius.circular(8.0),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical:10),
-          child: Text(postList[index].title,
-          style: TextStyle(fontSize: 19,color:Colors.black87,fontWeight: FontWeight.bold,decoration: TextDecoration.underline, fontFamily: 'Acme'),
+    return FadeAnimation(
+          1.5,Container(
+        height: orientation==Orientation.portrait? 250:170,
+        width:width,
+        padding: EdgeInsets.only(left:35,right:10),
+        margin: EdgeInsets.only(left: 30.0),
+        decoration:BoxDecoration(
+        color: Color.fromRGBO(231, 154, 134,0.7),
+        shape: BoxShape.rectangle,
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical:10),
+            child: Text(postList[index].title,
+            style: TextStyle(fontSize: 19,color:Colors.black87,fontWeight: FontWeight.bold,decoration: TextDecoration.underline, fontFamily: 'Acme'),
+            ),
           ),
-        ),
-        // SizedBox(height: 5,),
-        Text(postList[index].body,style: TextStyle(fontSize: 16,fontFamily: 'Faustina'),),
-    ],),
+          // SizedBox(height: 5,),
+          Text(postList[index].body,style: TextStyle(fontSize: 16,fontFamily: 'Faustina'),),
+      ],),
+      ),
     );
   }
 }
