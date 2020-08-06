@@ -15,7 +15,7 @@ class _GetPostState extends State<GetPost> {
 
    String url = 'https://jsonplaceholder.typicode.com/posts';
    bool gotPost = false;
-  Post requiredPost;
+   Post requiredPost;
    getPost()async{
      final response = await http.get("https://jsonplaceholder.typicode.com/posts/${idController.text}");
      if(response.statusCode ==200){
@@ -74,7 +74,6 @@ class _GetPostState extends State<GetPost> {
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Column(
-                    // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       TextField(
                       controller: idController,

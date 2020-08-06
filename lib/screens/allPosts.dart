@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart' as http;
 import 'package:json_api/animations/fadeAnimation.dart';
 import 'package:json_api/models/post.dart';
@@ -21,16 +22,15 @@ class _AllPostsState extends State<AllPosts> {
     fetchPosts();
   }
 
-  addPost()async{
-     await Navigator.push(context, MaterialPageRoute(builder: (context)=>CreatePost()));
-  }
-
   fetchPosts()async{
     setState(() {
       isLoading = true;
     });
+    final postsBox = Hive.box('posts');
+    if(postsBox.isEmpty){
     final response = await http.get("https://jsonplaceholder.typicode.com/posts");
     if(response.statusCode==200){
+      postsBox.put('1', response.body);
       postList = (jsonDecode(response.body) as List).map((post) => Post.fromJson(post)).toList();
       setState(() {
         isLoading = false;
@@ -40,7 +40,21 @@ class _AllPostsState extends State<AllPosts> {
     else{
       throw Exception('Failed to load Posts');
     }
+    }
+    else{
+      final responseBody = postsBox.get("1");
+       postList = (jsonDecode(responseBody) as List).map((post) => Post.fromJson(post)).toList();
+      setState(() {
+        isLoading = false;
+      });
+      return postList;
+
+    }
   }
+   gotoAddPost()async{
+     await Navigator.push(context, MaterialPageRoute(builder: (context)=>CreatePost()));
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -84,7 +98,7 @@ class _AllPostsState extends State<AllPosts> {
                                   children: <Widget>[
                                     FlatButton.icon(
                                       color: Color.fromRGBO(207, 117, 91,1),
-                                      onPressed: ()=>addPost(),
+                                      onPressed: ()=>gotoAddPost(),
                                       textColor: Colors.white,
                                       icon: Icon(Icons.add), 
                                       label:Text("Add Post", style: TextStyle(fontSize: 15,letterSpacing: 1.2, fontWeight: FontWeight.bold,))
@@ -137,7 +151,6 @@ class _AllPostsState extends State<AllPosts> {
       top:orientation==Orientation.portrait?90:55,
       child: FadeAnimation(1.5,
           Container(
-          // margin: EdgeInsets.symmetric(vertical:5),
           alignment: FractionalOffset.centerLeft,
           child: Container(
             height: 60,
@@ -157,7 +170,6 @@ class _AllPostsState extends State<AllPosts> {
 
   postCard(int index,context){
     var orientation = MediaQuery.of(context).orientation;
-    var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return FadeAnimation(
           1.5,Container(
