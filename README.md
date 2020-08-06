@@ -5,7 +5,6 @@ An application that fetches posts from the JSON Placeholder API and displays the
 * [Features](#features)
 * [Bonus Sections](#bonus-sections)
 * [Code Samples](#code-samples)
-* [Features](#features)
 * [Video link](#video-link)
 
 
