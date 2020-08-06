@@ -173,7 +173,7 @@ class _AllPostsState extends State<AllPosts> {
     var width = MediaQuery.of(context).size.width;
     return FadeAnimation(
           1.5,Container(
-        height: orientation==Orientation.portrait? 250:170,
+        height: orientation==Orientation.portrait? 260:170,
         width:width,
         padding: EdgeInsets.only(left:35,right:10),
         margin: EdgeInsets.only(left: 30.0),

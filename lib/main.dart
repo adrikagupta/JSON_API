@@ -41,7 +41,8 @@ class _MyAppState extends State<MyApp> {
             }
           }
           else{
-            return CircularProgressIndicator();
+            return Scaffold(
+              body: Center(child: CircularProgressIndicator()));
           }
         },
       ),
